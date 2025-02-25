@@ -1,5 +1,5 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
-name: VControld
+name: VControld-new
 version: "1.1.0"
 slug: vcontrold
 description: VControld
