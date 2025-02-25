@@ -1,7 +1,5 @@
 #!/bin/bash
 
-ls /usr/bin
-
 exec /usr/bin/vcontrold -s 
 
 RESULT=`exec /usr/bin/vclient -h 127.0.0.1:3002 -f /etc/vcontrold/heizung.cmd -t /etc/vcontrold/heizung.tpl 2>&1`
@@ -11,7 +9,6 @@ echo $RESULT
 echo $code
 
 #exit
-
 
 hasError=0
 while IFS='|' read -r item value status; do
