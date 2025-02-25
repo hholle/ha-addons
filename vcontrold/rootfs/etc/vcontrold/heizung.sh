@@ -1,9 +1,10 @@
 #!/bin/bash
 
+ls /usr/bin
 
-/usr/bin/vcontrold -s 
+exec /usr/bin/vcontrold -s 
 
-RESULT=`/usr/bin/vclient -h 127.0.0.1:3002 -f /etc/vcontrold/heizung.cmd -t /etc/vcontrold/heizung.tpl 2>&1`
+RESULT=`exec /usr/bin/vclient -h 127.0.0.1:3002 -f /etc/vcontrold/heizung.cmd -t /etc/vcontrold/heizung.tpl 2>&1`
 CODE=${PIPESTATUS[0]}
 
 echo $RESULT
