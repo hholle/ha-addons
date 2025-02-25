@@ -15,6 +15,7 @@ COPY rootfs /
 RUN apk add dpkg libxml2 mosquitto-clients
 RUN dpkg -i --force-architecture vcontrold_0.98.10-176_amd64.deb 
 
+RUN chmod a+x /etc/vcontrold/heizung.sh
 #EXPOSE 3002
 
 
