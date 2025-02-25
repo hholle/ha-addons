@@ -13,7 +13,7 @@ COPY rootfs /
 
 
 RUN apk add dpkg libxml2 mosquitto-clients
-RUN dpkg -i vcontrold_0.98.10-176_amd64.deb 
+RUN dpkg -i --force-architecture vcontrold_0.98.10-176_amd64.deb 
 
 #EXPOSE 3002
 
