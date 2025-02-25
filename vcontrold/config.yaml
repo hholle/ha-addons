@@ -1,0 +1,19 @@
+# https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
+name: VControld
+version: "1.1.0"
+slug: vcontrold
+description: VControld
+url: "https://github.com/hholle/ha-addons/tree/main/vcontrold"
+arch:
+  - amd64
+startup: application
+boot: auto
+ports: 
+  - "3002/tcp": 3002
+devices:
+  - /dev/ttyUSBVito"
+init: false
+apparmor: false
+#image: "ghcr.io/home-assistant/{arch}-addon-vcontrold"
+
+
