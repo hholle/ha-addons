@@ -1,0 +1,680 @@
+<vito>
+	<devices>
+		<device ID="20CB" name="VitoO1" protocol="P300" />
+	</devices>
+
+	<commands>
+
+		<!-- BETRIEBSARTEN -->
+
+		<command name='getVitoBetriebsart' protocmd='getaddr'>
+			<addr>2323</addr>
+			<len>1</len>
+			<unit>BA</unit>
+			<description>Betriebsart</description>
+		</command>
+		<command name='setVitoBetriebsart' protocmd='setaddr'>
+			<addr>2323</addr>
+			<len>1</len>
+			<unit>BA</unit>
+			<description>Setze Betriebsart</description>
+		</command>
+
+		<!-- PARTYBETRIEB -->
+
+		<command name='getVitoBetriebParty' protocmd='getaddr'>
+			<addr>2303</addr>
+			<len>1</len>
+			<unit>RT</unit>
+			<description>Partybetrieb</description>
+		</command>
+		<command name='setVitoBetriebParty' protocmd='setaddr'>
+			<addr>2303</addr>
+			<len>1</len>
+			<unit>RT</unit>
+			<description>Setze Partybetrieb</description>
+		</command>
+		<command name='getVitoTempPartySoll' protocmd='getaddr'>
+			<addr>2308</addr>
+			<len>1</len>
+			<unit>T1U</unit>
+			<description>Solltemperatur Partybetrieb in °C</description>
+		</command>
+		<command name='setVitoTempPartySoll' protocmd='setaddr'>
+			<addr>2308</addr>
+			<len>1</len>
+			<unit>T1U</unit>
+			<description>Setze Warmwassersolltemperatur Partybetrieb in °C</description>
+		</command>
+
+		<!-- FERIENBETRIEB -->
+
+		<command name='getVitoBetriebFerien' protocmd='getaddr'>
+			<addr>2535</addr>
+			<len>1</len>
+			<unit>BFB</unit>
+			<description>Ferienbetrieb</description>
+		</command>
+		<command name='getVitoFerienBeginn' protocmd='getaddr'>
+			<addr>2309</addr>
+			<len>8</len>
+			<unit>TI</unit>
+			<description>Abreisetag</description>
+		</command>
+		<command name='setVitoFerienBeginn' protocmd='setaddr'>
+			<addr>2309</addr>
+			<len>8</len>
+			<unit>TI</unit>
+			<description>Setze Abreisetag</description>
+		</command>
+		<command name='getVitoFerienEnde' protocmd='getaddr'>
+			<addr>2311</addr>
+			<len>8</len>
+			<unit>TI</unit>
+			<description>Rückreisetag</description>
+		</command>
+		<command name='setVitoFerienEnde' protocmd='setaddr'>
+			<addr>2311</addr>
+			<len>8</len>
+			<unit>TI</unit>
+			<description>Setze Rückreisetag</description>
+		</command>
+		
+		<!-- SPARBETRIEB -->
+
+		<command name='getVitoBetriebSpar' protocmd='getaddr'>
+			<addr>2302</addr>
+			<len>1</len>
+			<unit>RT</unit>
+			<description>Sparbetrieb</description>
+		</command>
+		<command name='setVitoBetriebSpar' protocmd='setaddr'>
+			<addr>2302</addr>
+			<len>1</len>
+			<unit>RT</unit>
+			<description>Setze Sparbetrieb</description>
+		</command>
+
+		<!-- SOLLTEMPERATUREN -->
+
+		<command name='getVitoTempRaumNorSoll' protocmd='getaddr'>
+			<addr>2306</addr>
+			<len>1</len>
+			<unit>T1U</unit>
+			<description>Raumsolltemperatur Normal in °C</description>
+		</command>
+		<command name='setVitoTempRaumNorSoll' protocmd='setaddr'>
+			<addr>2306</addr>
+			<len>1</len>
+			<unit>T1U</unit>
+			<description>Setze Raumsolltemperatur Normal in °C</description>
+		</command>
+		<command name='getVitoTempRaumRedSoll' protocmd='getaddr'>
+			<addr>2307</addr>
+			<len>1</len>
+			<unit>T1U</unit>
+			<description>Raumsolltemperatur reduzierter Betrieb in °C</description>
+		</command>
+		<command name='setVitoTempRaumRedSoll' protocmd='setaddr'>
+			<addr>2307</addr>
+			<len>1</len>
+			<unit>T1U</unit>
+			<description>Setze Raumsolltemperatur reduzierter Betrieb in °C</description>
+		</command>
+		
+		<!-- AUSSENTEMPERATUR -->
+
+		<command name='getVitoTempAussen' protocmd='getaddr'>
+			<addr>0800</addr>
+			<len>2</len>
+			<unit>TD</unit>
+			<description>Außentemperatur in °C</description>
+		</command>
+		
+		<!-- WARMWASSER -->
+
+		<command name='getVitoTempWWIst' protocmd='getaddr'>
+			<addr>0804</addr>
+			<len>2</len>
+			<unit>TD</unit>
+			<description>Warmwassertemperatur in °C</description>
+		</command>
+		<command name='getVitoTempWWSoll' protocmd='getaddr'>
+			<addr>6300</addr>
+			<len>1</len>
+			<unit>T1U</unit>
+			<description>Warmwassersolltemperatur in °C</description>
+		</command>
+		<command name='setVitoTempWWSoll' protocmd='setaddr'>
+			<addr>6300</addr>
+			<len>1</len>
+			<unit>T1U</unit>
+			<description>Setze Warmwassersolltemperatur in °C</description>
+		</command>
+		<command name='getVitoTempSpeicher' protocmd='getaddr'>
+			<addr>0812</addr>
+			<len>2</len>
+			<unit>TD</unit>
+			<description>Speichertemperatur in °C</description>
+		</command>
+		<command name='getVitoTempWWAuslauf' protocmd='getaddr'>
+			<addr>0814</addr>
+			<len>2</len>
+			<unit>TD</unit>
+			<description>Auslauftemperatur Warmwasser in °C</description>
+		</command>
+		<command name='getVitoStatusPumpeSpeicher' protocmd='getaddr'>
+			<addr>6513</addr>
+			<len>1</len>
+			<unit>RT</unit>
+			<description>Status Speicherladepumpe</description>
+		</command>
+
+		<!-- KESSEL / BRENNER -->
+
+		<command name='getVitoTempKesselIst' protocmd='getaddr'>
+			<addr>0810</addr>
+			<len>2</len>
+			<unit>TD</unit>
+			<description>Vorlauf- bzw. Kesseltemperatur in °C</description>
+		</command>
+		<command name='getVitoTempKesselSoll' protocmd='getaddr'>
+			<addr>555A</addr>
+			<len>2</len>
+			<unit>TD</unit>
+			<description>Kesselsolltemperatur in °C</description>
+		</command>
+		<command name='getVitoStatusFlamme' protocmd='getaddr'>
+			<addr>55DE</addr>
+			<len>1</len>
+			<unit>FLS</unit>
+			<description>Flammenstatus</description>
+		</command>
+		<command name='getVitoLaufzeitBrenner' protocmd='getaddr'>
+			<addr>08A7</addr>
+			<len>4</len>
+			<unit>HS</unit>
+			<description>Brenner Betriebsstunden</description>
+		</command>
+		<command name='getVitoStartsBrenner' protocmd='getaddr'>
+			<addr>088A</addr>
+			<len>4</len>
+			<unit>CO</unit>
+			<description>Brennerstarts</description>
+		</command>
+		<command name='getVitoStatusPumpeIntern' protocmd='getaddr'>
+			<addr>7660</addr>
+			<len>1</len>
+			<unit>IPS</unit>
+			<description>Status interne Pumpe</description>
+		</command>
+		<command name='getVitoDrehzahlPumpeIntern' protocmd='getaddr'>
+			<addr>7663</addr>
+			<len>1</len>
+			<unit>CO</unit>
+			<description>Drehzahl interne Pumpe</description>
+		</command>
+
+		<!-- HEIZKENNLINIE -->
+
+		<command name='getVitoKennlinieNeigung' protocmd='getaddr'>
+			<addr>27D3</addr>
+			<len>1</len>
+			<unit>UN</unit>
+			<description>Neigung Heizkennlinie</description>
+		</command>
+		<command name='setVitoKennlinieNeigung' protocmd='setaddr'>
+			<addr>27D3</addr>
+			<len>1</len>
+			<unit>UN</unit>
+			<description>Setze Neigung Heizkennlinie</description>
+		</command>
+		<command name='getVitoKennlinieNiveau' protocmd='getaddr'>
+			<addr>27D4</addr>
+			<len>1</len>
+			<unit>ST</unit>
+			<description>Niveau Heizkennlinie</description>
+		</command>
+		<command name='setVitoKennlinieNiveau' protocmd='setaddr'>
+			<addr>27D4</addr>
+			<len>1</len>
+			<unit>ST</unit>
+			<description>Setze Niveau Heizkennlinie</description>
+		</command>
+
+		<!-- HEIZKREIS -->
+
+		<command name='getVitoBetriebsartHK' protocmd='getaddr'>
+			<addr>2500</addr>
+			<len>1</len>
+			<unit>ABA</unit>
+			<description>Aktuelle Betriebsart des Heizkreises</description>
+		</command>
+		<command name='getVitoTempVLSoll' protocmd='getaddr'>
+			<addr>2544</addr>
+			<len>2</len>
+			<unit>TD</unit>
+			<description>Vorlaufsolltemperatur in °C</description>
+		</command>
+		<command name='getVitoTempRLIst' protocmd='getaddr'>
+			<addr>0808</addr>
+			<len>2</len>
+			<unit>TD</unit>
+			<description>Rücklauftemperatur in °C</description>
+		</command>
+		<command name='getVitoStatusPumpeHK' protocmd='getaddr'>
+			<addr>2906</addr>
+			<len>1</len>
+			<unit>RT</unit>
+			<description>Status Heizkreispumpe</description>
+		</command>
+		<command name='getVitoTempRaumHK' protocmd='getaddr'>
+			<addr>0896</addr>
+			<len>2</len>
+			<unit>TD</unit>
+			<description>Heizkreis Raumtemperatur in °C</description>
+		</command>
+		<command name='getVitoStatusPumpeZirku' protocmd='getaddr'>
+			<addr>6515</addr>
+			<len>1</len>
+			<unit>RT</unit>
+			<description>Status Zirkulationspumpe</description>
+		</command>
+
+		<!-- SOLAR -->
+
+		<command name='getVitoTempSolarkol' protocmd='getaddr'>
+			<addr>6564</addr>
+			<len>2</len>
+			<unit>TD</unit>
+			<description>Solar-Kollektortemperatur in °C</description>
+		</command>
+		<command name='getVitoTempSolarspeicher' protocmd='getaddr'>
+			<addr>6566</addr>
+			<len>2</len>
+			<unit>TD</unit>
+			<description>Solar-Speichertemperatur in °C</description>
+		</command>
+		<command name='getVitoLaufzeitSolar' protocmd='getaddr'>
+			<addr>6568</addr>
+			<len>2</len>
+			<unit>CO</unit>
+			<description>Solar-Betriebsstunden</description>
+		</command>
+		<command name='getVitoLeistungSolar' protocmd='getaddr'>
+			<addr>6560</addr>
+			<len>4</len>
+			<unit>CO</unit>
+			<description>Solar-Wärmeenergie</description>
+		</command>
+		<command name='getVitoErtragTagSolar' protocmd='getaddr'>
+			<addr>CF30</addr>
+			<len>4</len>
+			<unit>CO</unit>
+			<description>Solarertrag aktueller Tag</description>
+		</command>
+
+		<!-- VENTILE -->
+		
+		<command name='getVitoStatusUmschaltventil' protocmd='getaddr'>
+			<addr>0A10</addr>
+			<len>1</len>
+			<unit>USV</unit>
+			<description>Status Umschaltventil Warmwasser/Heizen</description>
+		</command>
+
+		<!-- HEIZZEITEN -->
+
+		<command name='getVitoTimerMoHeizen' protocmd='getaddr'>
+			<addr>2000</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Schaltzeit Montag</description>
+		</command>
+		<command name='setVitoTimerMoHeizen' protocmd='setaddr'>
+			<addr>2000</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Setze Schaltzeit Montag</description>
+		</command>
+		<command name='getVitoTimerDiHeizen' protocmd='getaddr'>
+			<addr>2008</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Schaltzeit Dienstag</description>
+		</command>
+		<command name='setVitoTimerDiHeizen' protocmd='setaddr'>
+			<addr>2008</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Setze Schaltzeit Dienstag</description>
+		</command>
+		<command name='getVitoTimerMiHeizen' protocmd='getaddr'>
+			<addr>2010</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Schaltzeit Mittwoch</description>
+		</command>
+		<command name='setVitoTimerMiHeizen' protocmd='setaddr'>
+			<addr>2010</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Setze Schaltzeit Mittwoch</description>
+		</command>
+		<command name='getVitoTimerDoHeizen' protocmd='getaddr'>
+			<addr>2018</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Schaltzeit Donnerstag</description>
+		</command>
+		<command name='setVitoTimerDoHeizen' protocmd='setaddr'>
+			<addr>2018</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Setze Schaltzeit Donnerstag</description>
+		</command>
+		<command name='getVitoTimerFrHeizen' protocmd='getaddr'>
+			<addr>2020</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Schaltzeit Freitag</description>
+		</command>
+		<command name='setVitoTimerFrHeizen' protocmd='setaddr'>
+			<addr>2020</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Setze Schaltzeit Freitag</description>
+		</command>
+		<command name='getVitoTimerSaHeizen' protocmd='getaddr'>
+			<addr>2028</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Schaltzeit Samstag</description>
+		</command>
+		<command name='setVitoTimerSaHeizen' protocmd='setaddr'>
+			<addr>2028</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Setze Schaltzeit Samstag</description>
+		</command>
+		<command name='getVitoTimerSoHeizen' protocmd='getaddr'>
+			<addr>2030</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Schaltzeit Sonntag</description>
+		</command>
+		<command name='setVitoTimerSoHeizen' protocmd='setaddr'>
+			<addr>2030</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Setze Schaltzeit Sonntag</description>
+		</command>
+
+		<!-- WARMWASSERZEITEN -->
+
+		<command name='getVitoTimerMoWW' protocmd='getaddr'>
+			<addr>2100</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Schaltzeit Warmwasser Montag</description>
+		</command>
+		<command name='setVitoTimerMoWW' protocmd='setaddr'>
+			<addr>2100</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Setze Schaltzeit Warmwasser Montag</description>
+		</command>
+		<command name='getVitoTimerDiWW' protocmd='getaddr'>
+			<addr>2108</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Schaltzeit Warmwasser Dienstag</description>
+		</command>
+		<command name='setVitoTimerDiWW' protocmd='setaddr'>
+			<addr>2108</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Setze Schaltzeit Warmwasser Dienstag</description>
+		</command>
+		<command name='getVitoTimerMiWW' protocmd='getaddr'>
+			<addr>2110</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Schaltzeit Warmwasser Mittwoch</description>
+		</command>
+		<command name='setVitoTimerMiWW' protocmd='setaddr'>
+			<addr>2110</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Setze Schaltzeit Warmwasser Mittwoch</description>
+		</command>
+		<command name='getVitoTimerDoWW' protocmd='getaddr'>
+			<addr>2118</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Schaltzeit Warmwasser Donnerstag</description>
+		</command>
+		<command name='setVitoTimerDoWW' protocmd='setaddr'>
+			<addr>2118</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Setze Schaltzeit Warmwasser Donnerstag</description>
+		</command>
+		<command name='getVitoTimerFrWW' protocmd='getaddr'>
+			<addr>2120</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Schaltzeit Warmwasser Freitag</description>
+		</command>
+		<command name='setVitoTimerFrWW' protocmd='setaddr'>
+			<addr>2120</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Setze Schaltzeit Warmwasser Freitag</description>
+		</command>
+		<command name='getVitoTimerSaWW' protocmd='getaddr'>
+			<addr>2128</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Schaltzeit Warmwasser Samstag</description>
+		</command>
+		<command name='setVitoTimerSaWW' protocmd='setaddr'>
+			<addr>2128</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Setze Schaltzeit Warmwasser Samstag</description>
+		</command>
+		<command name='getVitoTimerSoWW' protocmd='getaddr'>
+			<addr>2130</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Schaltzeit Warmwasser Sonntag</description>
+		</command>
+		<command name='setVitoTimerSoWW' protocmd='setaddr'>
+			<addr>2130</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Setze Schaltzeit Warmwasser Sonntag</description>
+		</command>
+
+		<!-- ZIRKULATIONSZEITEN -->
+
+		<command name='getVitoTimerMoPumpeZirku' protocmd='getaddr'>
+			<addr>2200</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Schaltzeit Zirkulationspumpe Montag</description>
+		</command>
+		<command name='setVitoTimerMoPumpeZirku' protocmd='setaddr'>
+			<addr>2200</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Setze Schaltzeit Zirkulationspumpe Montag</description>
+		</command>
+		<command name='getVitoTimerDiPumpeZirku' protocmd='getaddr'>
+			<addr>2208</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Schaltzeit Zirkulationspumpe Dienstag</description>
+		</command>
+		<command name='setVitoTimerDiPumpeZirku' protocmd='setaddr'>
+			<addr>2208</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Setze Schaltzeit Zirkulationspumpe Dienstag</description>
+		</command>
+		<command name='getVitoTimerMiPumpeZirku' protocmd='getaddr'>
+			<addr>2210</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Schaltzeit Zirkulationspumpe Mittwoch</description>
+		</command>
+		<command name='setVitoTimerMiPumpeZirku' protocmd='setaddr'>
+			<addr>2210</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Setze Schaltzeit Zirkulationspumpe Mittwoch</description>
+		</command>
+		<command name='getVitoTimerDoPumpeZirku' protocmd='getaddr'>
+			<addr>2218</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Schaltzeit Zirkulationspumpe Donnerstag</description>
+		</command>
+		<command name='setVitoTimerDoPumpeZirku' protocmd='setaddr'>
+			<addr>2218</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Setze Schaltzeit Zirkulationspumpe Donnerstag</description>
+		</command>
+		<command name='getVitoTimerFrPumpeZirku' protocmd='getaddr'>
+			<addr>2220</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Schaltzeit Zirkulationspumpe Freitag</description>
+		</command>
+		<command name='setVitoTimerFrPumpeZirku' protocmd='setaddr'>
+			<addr>2220</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Setze Schaltzeit Zirkulationspumpe Freitag</description>
+		</command>
+		<command name='getVitoTimerSaPumpeZirku' protocmd='getaddr'>
+			<addr>2228</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Schaltzeit Zirkulationspumpe Samstag</description>
+		</command>
+		<command name='setVitoTimerSaPumpeZirku' protocmd='setaddr'>
+			<addr>2228</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Setze Schaltzeit Zirkulationspumpe Samstag</description>
+		</command>
+		<command name='getVitoTimerSoPumpeZirku' protocmd='getaddr'>
+			<addr>2230</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Schaltzeit Zirkulationspumpe Sonntag</description>
+		</command>
+		<command name='setVitoTimerSoPumpeZirku' protocmd='setaddr'>
+			<addr>2230</addr>
+			<len>8</len>
+			<unit>CT</unit>
+			<description>Setze Schaltzeit Zirkulationspumpe Sonntag</description>
+		</command>
+
+		<!-- STOERUNG -->
+		
+		<command name='getVitoStatusStoerung' protocmd='getaddr'>
+			<addr>0A82</addr>
+			<len>1</len>
+			<unit>ES</unit>
+			<description>Status Störung</description>
+		</command>
+		<command name='getVitoStoerung1' protocmd='getaddr'>
+			<addr>7507</addr>
+			<len>9</len>
+			<unit>EM</unit>
+			<description>Störung Meldung 1</description>
+		</command>
+		<command name='getVitoStoerung2' protocmd='getaddr'>
+			<addr>7510</addr>
+			<len>9</len>
+			<unit>EM</unit>
+			<description>Störung Meldung 2</description>
+		</command>
+		<command name='getVitoStoerung3' protocmd='getaddr'>
+			<addr>7519</addr>
+			<len>9</len>
+			<unit>EM</unit>
+			<description>Störung Meldung 3</description>
+		</command>
+		<command name='getVitoStoerung4' protocmd='getaddr'>
+			<addr>7522</addr>
+			<len>9</len>
+			<unit>EM</unit>
+			<description>Störung Meldung 4</description>
+		</command>
+		<command name='getVitoStoerung5' protocmd='getaddr'>
+			<addr>752B</addr>
+			<len>9</len>
+			<unit>EM</unit>
+			<description>Störung Meldung 5</description>
+		</command>
+		<command name='getVitoStoerung6' protocmd='getaddr'>
+			<addr>7534</addr>
+			<len>9</len>
+			<unit>EM</unit>
+			<description>Störung Meldung 6</description>
+		</command>
+		<command name='getVitoStoerung7' protocmd='getaddr'>
+			<addr>753D</addr>
+			<len>9</len>
+			<unit>EM</unit>
+			<description>Störung Meldung 7</description>
+		</command>
+		<command name='getVitoStoerung8' protocmd='getaddr'>
+			<addr>7546</addr>
+			<len>9</len>
+			<unit>EM</unit>
+			<description>Störung Meldung 8</description>
+		</command>
+		<command name='getVitoStoerung9' protocmd='getaddr'>
+			<addr>754F</addr>
+			<len>9</len>
+			<unit>EM</unit>
+			<description>Störung Meldung 9</description>
+		</command>
+		<command name='getVitoStoerung10' protocmd='getaddr'>
+			<addr>7558</addr>
+			<len>9</len>
+			<unit>EM</unit>
+			<description>Störung Meldung 10</description>
+		</command>
+
+		<!-- SYSTEMZEIT -->
+
+		<command name='getVitoSystemzeit' protocmd='getaddr'>
+			<addr>088E</addr>
+			<len>8</len>
+			<unit>TI</unit>
+			<description>Systemzeit</description>
+		</command>
+		<command name='setVitoSystemzeit' protocmd='setaddr'>
+			<addr>088E</addr>
+			<len>8</len>
+			<unit>TI</unit>
+			<description>Setze Systemzeit</description>
+		</command>
+
+		<!-- GERAETEDATEN -->
+
+		<command name='getVitoAnlagenschema' protocmd='getaddr'>
+			<addr>7700</addr>
+			<len>1</len>
+			<unit>ST</unit>
+			<description>Anlagenschema</description>
+		</command>
+	</commands>
+</vito>

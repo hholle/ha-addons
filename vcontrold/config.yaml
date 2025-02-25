@@ -9,7 +9,7 @@ arch:
 startup: application
 boot: auto
 ports: 
-  - "3002/tcp": 3002
+  "3002/tcp": 3002
 devices:
   - /dev/ttyUSBVito"
 init: false

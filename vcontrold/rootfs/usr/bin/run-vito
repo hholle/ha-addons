@@ -1,0 +1,10 @@
+#!/bin/bash
+
+
+while [ : ]
+do
+    /etc/vcontrold/heizung.sh
+    sleep 5m
+done
+
+echo "Heizung Script failed"
