@@ -1,6 +1,6 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
 name: VControld-new
-version: "1.1.10"
+version: "1.1.11"
 slug: vcontrold
 description: VControld
 url: "https://github.com/hholle/ha-addons/tree/main/vcontrold"
@@ -8,6 +8,8 @@ arch:
   - amd64
 startup: application
 boot: auto
+services:
+  - 'mqtt:need'
 ports: 
   "3002/tcp": 3002
 devices:
