@@ -1,9 +1,6 @@
-# Home Assistant Add-on: Example add-on
+# Home Assistant Add-on: vcontrold
+_Connects to Viessmann heating via optolink and send data every 2min via MQTT to HA_
 
-_Example add-on to use as a blueprint for new add-ons._
+https://github.com/openv/vcontrold
 
-
-![Supports amd64 Architecture][amd64-shield]
-
-
-[amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
+![Supports amd64 Architecture]
