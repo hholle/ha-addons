@@ -1,8 +1,8 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
-name: VControld-new
-version: "1.1.14"
+name: vcontrold
+version: "1.1.15"
 slug: vcontrold
-description: VControld
+description: vcontrold - Viessmann Vito heating MQTT communication
 url: "https://github.com/hholle/ha-addons/tree/main/vcontrold"
 arch:
   - amd64

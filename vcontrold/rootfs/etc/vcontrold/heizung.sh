@@ -12,7 +12,7 @@ RESULT=$(/usr/bin/vclient -h 127.0.0.1:3002 -f /etc/vcontrold/heizung.cmd -t /et
 CODE=${PIPESTATUS[0]}
 
 echo $RESULT
-echo $code
+echo $CODE
 
 #exit
 
