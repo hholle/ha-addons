@@ -10,11 +10,11 @@
 				<allow ip='127.0.0.1'/>
 			</net>
       
-			<logging>
+			<!--<logging>
 				<file>/etc/vcontrold/vcontrold.log</file>
 				<syslog>n</syslog>
 				<debug>y</debug>
-			</logging>
+			</logging> -->
       
 			<device ID="20CB"/>
 		</config>

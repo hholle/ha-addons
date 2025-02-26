@@ -6,5 +6,9 @@
 
 bashio::log.info "VControld starting...."
 
+MQTT_HOST=$(bashio::services mqtt "host")
+MQTT_USER=$(bashio::services mqtt "username")
+MQTT_PASSWORD=$(bashio::services mqtt "password")
+
 ## Run your program
 exec /usr/bin/run-vito
