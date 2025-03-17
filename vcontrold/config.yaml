@@ -6,8 +6,6 @@ description: vcontrold - Viessmann Vito heating MQTT communication
 url: "https://github.com/hholle/ha-addons/tree/main/vcontrold"
 arch:
   - amd64
-startup: application
-boot: auto
 services:
   - 'mqtt:need'
 ports: 
