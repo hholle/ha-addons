@@ -1,14 +1,17 @@
 #!/usr/bin/with-contenv bashio
 # ==============================================================================
-# Start the example service
+# Start vcontrold service
 # s6-overlay docs: https://github.com/just-containers/s6-overlay
 # ==============================================================================
 
 bashio::log.info "VControld starting...."
 
-MQTT_HOST=$(bashio::services mqtt "host")
-MQTT_USER=$(bashio::services mqtt "username")
-MQTT_PASSWORD=$(bashio::services mqtt "password")
+# Render vcontrold.xml from template using the configured device path
+tempio \
+    -template /etc/vcontrold/vcontrold.xml.gtpl \
+    -out /etc/vcontrold/vcontrold.xml \
+    -conf /data/options.json
 
-## Run your program
+bashio::log.info "Using device: $(bashio::config 'device')"
+
 exec /usr/bin/run-vito

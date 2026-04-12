@@ -3,7 +3,7 @@
 	<unix>
 		<config>
 			<serial>
-				<tty>/dev/ttyUSBVito</tty>
+				<tty>{{ .device }}</tty>
 			</serial>
 			<net>
 				<port>3002</port>
@@ -16,6 +16,7 @@
 				<debug>y</debug>
 			</logging> -->
       
+			<!-- Vitotronic 200 (VScotHO1), device ID 20CB, protocol P300/KW2 -->
 			<device ID="20CB"/>
 		</config>
 	</unix>

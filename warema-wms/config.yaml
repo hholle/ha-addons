@@ -1,0 +1,29 @@
+# https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
+name: Warema WMS
+version: "1.1.1"
+slug: warema_wms
+description: Control Warema WMS blinds via USB stick → MQTT with HA Discovery
+url: "https://github.com/hholle/ha-addons/tree/main/warema-wms"
+arch:
+  - amd64
+startup: services
+boot: auto
+services:
+  - 'mqtt:need'
+init: false
+uart: true
+hassio_api: true
+#image: "ghcr.io/hholle/{arch}-addon-warema-wms"
+options:
+  wms_serial_port: /dev/ttyUSB0
+schema:
+  wms_serial_port: device(subsystem=tty)
+  wms_key: str?
+  wms_pan_id: str?
+  wms_channel: int?
+  ignored_devices: str?
+  force_devices: str?
+  device_groups: str?
+  polling_interval: int?
+  moving_interval: int?
+  log_level: str?

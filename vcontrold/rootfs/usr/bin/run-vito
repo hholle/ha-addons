@@ -1,10 +1,14 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bashio
 
+# Publish HA MQTT discovery once so all entities are auto-created
+/usr/bin/publish-discovery
 
-while [ : ]
-do
-    /etc/vcontrold/heizung.sh
-    sleep 5m
+while true; do
+    bashio::log.info "Starting heizung.sh poll..."
+    /etc/vcontrold/heizung.sh || true
+    bashio::log.info "Sleeping 5 minutes..."
+    sleep 300
+    bashio::log.info "Sleep done, polling again"
 done
 
-echo "Heizung Script failed"
+bashio::log.error "run-vito loop exited unexpectedly"

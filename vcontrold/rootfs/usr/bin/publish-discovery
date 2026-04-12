@@ -1,0 +1,72 @@
+#!/usr/bin/with-contenv bashio
+# Publishes MQTT discovery messages so Home Assistant auto-creates all entities.
+# Called once at startup from run-vito. All payloads are retained.
+
+MQTT_HOST=$(bashio::services mqtt "host")
+MQTT_USER=$(bashio::services mqtt "username")
+MQTT_PASSWORD=$(bashio::services mqtt "password")
+
+DEVICE='{"identifiers":["vcontrold"],"name":"Viessmann Heizung","model":"Vitotronic 200 (VScotHO1)","manufacturer":"Viessmann"}'
+BASE="vcontrold/Heating"
+
+pub() {
+    local component="$1" uid="$2" payload="$3"
+    mosquitto_pub -u "$MQTT_USER" -P "$MQTT_PASSWORD" -h "$MQTT_HOST" \
+        -r -t "homeassistant/${component}/${uid}/config" -m "$payload"
+}
+
+# --- Helper: sensor ---
+sensor() {
+    local uid="$1" name="$2" topic="$3" dc="$4" unit="$5" sc="$6"
+    local p="{\"name\":\"${name}\",\"unique_id\":\"${uid}\",\"state_topic\":\"${topic}\",\"device\":${DEVICE}"
+    [ -n "$dc" ]   && p="${p},\"device_class\":\"${dc}\""
+    [ -n "$unit" ] && p="${p},\"unit_of_measurement\":\"${unit}\""
+    [ -n "$sc" ]   && p="${p},\"state_class\":\"${sc}\""
+    p="${p}}"
+    pub "sensor" "$uid" "$p"
+}
+
+# --- Helper: binary_sensor ---
+binary() {
+    local uid="$1" name="$2" topic="$3" dc="$4" on="$5" off="$6"
+    pub "binary_sensor" "$uid" \
+        "{\"name\":\"${name}\",\"unique_id\":\"${uid}\",\"state_topic\":\"${topic}\",\"device_class\":\"${dc}\",\"payload_on\":\"${on}\",\"payload_off\":\"${off}\",\"device\":${DEVICE}}"
+}
+
+bashio::log.info "Publishing MQTT discovery..."
+
+# --- Temperatures ---
+sensor "vcontrold_temp_aussen"       "Außentemperatur"              "${BASE}_getVitoTempAussen"       "temperature" "°C" "measurement"
+sensor "vcontrold_temp_kessel_ist"   "Kesseltemperatur (ist)"       "${BASE}_getVitoTempKesselIst"    "temperature" "°C" "measurement"
+sensor "vcontrold_temp_kessel_soll"  "Kesseltemperatur (soll)"      "${BASE}_getVitoTempKesselSoll"   "temperature" "°C" "measurement"
+sensor "vcontrold_temp_ww_ist"       "Warmwassertemperatur (ist)"   "${BASE}_getVitoTempWWIst"        "temperature" "°C" "measurement"
+sensor "vcontrold_temp_ww_soll"      "Warmwassertemperatur (soll)"  "${BASE}_getVitoTempWWSoll"       "temperature" "°C" "measurement"
+sensor "vcontrold_temp_speicher"     "Speichertemperatur"           "${BASE}_getVitoTempSpeicher"     "temperature" "°C" "measurement"
+sensor "vcontrold_temp_ww_auslauf"   "WW Auslauftemperatur"         "${BASE}_getVitoTempWWAuslauf"    "temperature" "°C" "measurement"
+sensor "vcontrold_temp_vl_soll"      "Vorlauftemperatur (soll)"     "${BASE}_getVitoTempVLSoll"       "temperature" "°C" "measurement"
+sensor "vcontrold_temp_rl_ist"       "Rücklauftemperatur (ist)"     "${BASE}_getVitoTempRLIst"        "temperature" "°C" "measurement"
+sensor "vcontrold_temp_raum_nor"     "Raumsolltemperatur Normal"    "${BASE}_getVitoTempRaumNorSoll"  "temperature" "°C" "measurement"
+sensor "vcontrold_temp_raum_red"     "Raumsolltemperatur Reduziert" "${BASE}_getVitoTempRaumRedSoll"  "temperature" "°C" "measurement"
+
+# --- Counters ---
+sensor "vcontrold_starts_brenner"    "Brennerstarts"                "${BASE}_getVitoStartsBrenner"    "" "" "total_increasing"
+sensor "vcontrold_drehzahl_pumpe"    "Drehzahl Pumpe intern"        "${BASE}_getVitoDrehzahlPumpeIntern" "" "%" "measurement"
+
+# --- Heating curve ---
+sensor "vcontrold_kennlinie_neigung" "Heizkennlinie Neigung"        "${BASE}_getVitoKennlinieNeigung" "" "" "measurement"
+sensor "vcontrold_kennlinie_niveau"  "Heizkennlinie Niveau"         "${BASE}_getVitoKennlinieNiveau"  "" "" "measurement"
+
+# --- Text / enum (no device_class — displayed as plain text) ---
+sensor "vcontrold_betriebsart"       "Betriebsart"                  "${BASE}_getVitoBetriebsart"      "" "" ""
+sensor "vcontrold_betriebsart_hk"    "Betriebsart Heizkreis"        "${BASE}_getVitoBetriebsartHK"    "" "" ""
+sensor "vcontrold_umschaltventil"    "Umschaltventil"               "${BASE}_getVitoStatusUmschaltventil" "" "" ""
+
+# --- Binary sensors (pumps, flame, fault) ---
+binary "vcontrold_flamme"            "Brennerflamme"                "${BASE}_getVitoStatusFlamme"        "heat"    "an"             "aus"
+binary "vcontrold_pumpe_speicher"    "Pumpe Speicher"               "${BASE}_getVitoStatusPumpeSpeicher" "running" "an"             "aus"
+binary "vcontrold_pumpe_intern"      "Pumpe intern"                 "${BASE}_getVitoStatusPumpeIntern"   "running" "an"             "aus"
+binary "vcontrold_pumpe_hk"          "Pumpe Heizkreis"              "${BASE}_getVitoStatusPumpeHK"       "running" "an"             "aus"
+binary "vcontrold_pumpe_zirku"       "Pumpe Zirkulation"            "${BASE}_getVitoStatusPumpeZirku"    "running" "an"             "aus"
+binary "vcontrold_stoerung"          "Störung"                      "${BASE}_getVitoStatusStoerung"      "problem" "FEHLERMELDUNG"  "kein Fehler"
+
+bashio::log.info "MQTT discovery published ($(date))"

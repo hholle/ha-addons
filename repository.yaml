@@ -1,4 +1,0 @@
-# https://developers.home-assistant.io/docs/add-ons/repository#repository-configuration
-name: Henriks Home Assistant add-on repository
-url: 'https://github.com/hholle/ha-addons'
-maintainer: Henrik Holle <hholle@gmail.com>

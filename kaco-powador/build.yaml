@@ -1,0 +1,9 @@
+# https://developers.home-assistant.io/docs/add-ons/configuration#add-on-dockerfile
+build_from:
+  amd64: "ghcr.io/home-assistant/base-python:latest"
+
+labels:
+  org.opencontainers.image.title: "Home Assistant Add-on: KACO Powador"
+  org.opencontainers.image.description: "KACO Powador solar inverter MQTT integration"
+  org.opencontainers.image.source: "https://github.com/hholle/ha-addons/tree/main/kaco-powador"
+  org.opencontainers.image.licenses: "Apache License 2.0"

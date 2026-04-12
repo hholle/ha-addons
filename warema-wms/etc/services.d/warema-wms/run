@@ -1,0 +1,53 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Home Assistant Add-on: Warema Bridge
+# Reads add-on config + MQTT service discovery into env vars, then starts the
+# Node.js bridge. Runs under s6-overlay; this script is the service entrypoint.
+# ==============================================================================
+
+bashio::log.info 'Starting Warema Bridge...'
+
+# ------------------------------------------------------------------------------
+# Add-on config → environment variables
+# All options are optional in the schema; only export what is actually set.
+# WMS_KEY is sensitive — log a redacted indicator instead of the value.
+# ------------------------------------------------------------------------------
+for var in WMS_PAN_ID WMS_CHANNEL WMS_SERIAL_PORT IGNORED_DEVICES FORCE_DEVICES DEVICE_GROUPS POLLING_INTERVAL MOVING_INTERVAL LOG_LEVEL; do
+    key="${var,,}"
+    if bashio::config.has_value "${key}"; then
+        value="$(bashio::config "${key}")"
+        export "${var}=${value}"
+        bashio::log.info "Config: ${var}=${value}"
+    fi
+done
+
+if bashio::config.has_value 'wms_key'; then
+    export WMS_KEY="$(bashio::config 'wms_key')"
+    bashio::log.info "Config: WMS_KEY=<redacted>"
+fi
+
+# ------------------------------------------------------------------------------
+# MQTT — use the Supervisor service broker (auto-discovery via services API).
+# Manual mqtt.* overrides are not supported; use the Mosquitto add-on instead.
+# ------------------------------------------------------------------------------
+if ! bashio::services.available 'mqtt'; then
+    bashio::exit.nok "No MQTT broker found. Please install and start the Mosquitto add-on."
+fi
+
+bashio::log.info 'MQTT broker available — fetching connection details...'
+
+MQTT_PREFIX='mqtt://'
+if bashio::var.true "$(bashio::services mqtt 'ssl')"; then
+    MQTT_PREFIX='mqtts://'
+fi
+
+export MQTT_SERVER="${MQTT_PREFIX}$(bashio::services mqtt 'host'):$(bashio::services mqtt 'port')"
+export MQTT_USER="$(bashio::services mqtt 'username')"
+export MQTT_PASSWORD="$(bashio::services mqtt 'password')"
+
+bashio::log.info "MQTT: ${MQTT_SERVER} (user: ${MQTT_USER})"
+
+# ------------------------------------------------------------------------------
+# Start the bridge — exec replaces this shell so s6 tracks the Node process PID
+# ------------------------------------------------------------------------------
+exec node /srv/index.js

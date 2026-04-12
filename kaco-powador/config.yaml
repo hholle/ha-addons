@@ -1,0 +1,19 @@
+# https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
+name: KACO Powador
+version: "1.1.0"
+slug: kaco_powador
+description: KACO Powador solar inverter → MQTT with Home Assistant discovery
+url: "https://github.com/hholle/ha-addons/tree/main/kaco-powador"
+arch:
+  - amd64
+services:
+  - 'mqtt:need'
+devices:
+  - /dev/ttyUSBPV
+init: false
+uart: true
+#image: "ghcr.io/hholle/{arch}-addon-kaco-powador"
+options:
+  device: /dev/ttyUSBPV
+schema:
+  device: str

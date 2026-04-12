@@ -1,2 +1,15 @@
+# macOS
 .DS_Store
 
+# Node.js (warema-wms)
+warema-wms/node_modules/
+warema-wms/package-lock.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Editor
+.vscode/
+*.swp
