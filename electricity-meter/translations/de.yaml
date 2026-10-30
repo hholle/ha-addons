@@ -1,0 +1,7 @@
+configuration:
+  device:
+    name: Serielles Gerät
+    description: Pfad des optischen USB-Adapters, z. B. /dev/ttyUSBZaehler. Bei Änderung auch devices in config.yaml anpassen.
+  poll_interval:
+    name: Abfrageintervall
+    description: Sekunden zwischen dem Start zweier Zählerabfragen. Ein Telegramm dauert bei 300 Baud etwa 10-15 s.

@@ -1,0 +1,7 @@
+configuration:
+  device:
+    name: Serial device
+    description: Path of the optical USB adapter, e.g. /dev/ttyUSBZaehler. If you change it, also change devices in config.yaml.
+  poll_interval:
+    name: Poll interval
+    description: Seconds between the start of two meter requests. A telegram takes about 10-15 s at 300 baud.

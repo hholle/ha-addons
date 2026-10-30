@@ -1,6 +1,6 @@
-# https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
+# https://developers.home-assistant.io/docs/apps/configuration/
 name: Electricity Meter
-version: "1.1.0"
+version: "1.2.0"
 slug: electricity_meter
 description: Electricity meter via optical interface (IEC 62056-21 D0) → MQTT with HA Discovery
 url: "https://github.com/hholle/ha-addons/tree/main/electricity-meter"
@@ -15,5 +15,7 @@ uart: true
 #image: "ghcr.io/hholle/{arch}-addon-electricity-meter"
 options:
   device: /dev/ttyUSBZaehler
+  poll_interval: 60
 schema:
   device: str
+  poll_interval: int(30,3600)
