@@ -1,5 +1,15 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.1.1
+
+- Availability topic + MQTT last-will: entities become unavailable instead of showing stale values
+- Marked offline after 5 min without serial data or on serial error
+- MQTT connect retried at startup instead of crashing
+- Discovery re-published on every MQTT (re)connect
+- Lines with non-numeric measurement fields are skipped
+- Serial read timeout so a silent inverter is detected
+- Modernised for current Home Assistant: removed deprecated `build.yaml` (base image now set in the Dockerfile), added `DOCS.md` and option translations (en, de)
+
 ## 1.1.0
 
 - Full rewrite: long-running process instead of cron

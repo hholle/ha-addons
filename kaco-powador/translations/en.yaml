@@ -1,0 +1,4 @@
+configuration:
+  device:
+    name: Serial device
+    description: Path of the USB-RS232 adapter, e.g. /dev/ttyUSBPV. If you change it, also change devices in config.yaml.

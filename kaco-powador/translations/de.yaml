@@ -1,0 +1,4 @@
+configuration:
+  device:
+    name: Serielles Gerät
+    description: Pfad des USB-RS232-Adapters, z. B. /dev/ttyUSBPV. Bei Änderung auch devices in config.yaml anpassen.

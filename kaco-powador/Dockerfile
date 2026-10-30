@@ -1,4 +1,6 @@
-ARG BUILD_FROM
+# https://developers.home-assistant.io/docs/apps/configuration/
+# Base image default lives here: build.yaml is deprecated.
+ARG BUILD_FROM=ghcr.io/home-assistant/base-python:latest
 FROM $BUILD_FROM
 
 ENV LANG C.UTF-8

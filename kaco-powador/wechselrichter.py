@@ -33,6 +33,10 @@ HA_DEVICE = {
     "manufacturer": "KACO new energy",
 }
 
+STATUS_TOPIC  = "wechselrichter/status"
+SERIAL_TIMEOUT = 5      # s, readline timeout
+OFFLINE_AFTER  = 300    # s without data → mark entities unavailable
+
 # (unique_id, name, state_topic, device_class, unit, state_class)
 SENSORS = [
     ("wechselrichter_einspeisung",       "Eingespeiste Leistung",  "wechselrichter/einspeisung",         "power",       "W",  "measurement"),
@@ -61,6 +65,7 @@ def publish_discovery(client):
             "name": name,
             "unique_id": uid,
             "state_topic": topic,
+            "availability_topic": STATUS_TOPIC,
             "device": HA_DEVICE,
         }
         if dc:   payload["device_class"] = dc
@@ -70,10 +75,25 @@ def publish_discovery(client):
     log.info("MQTT discovery published")
 
 
+def on_connect(client, userdata, flags, reason_code, properties):
+    if reason_code == 0:
+        publish_discovery(client)
+    else:
+        log.error("MQTT connect refused: %s", reason_code)
+
+
 def connect_mqtt():
     client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, "wechselrichter")
     client.username_pw_set(MQTT_USER, MQTT_PASSWORD)
-    client.connect(MQTT_HOST)
+    client.will_set(STATUS_TOPIC, "offline", retain=True)
+    client.on_connect = on_connect
+    while True:
+        try:
+            client.connect(MQTT_HOST)
+            break
+        except OSError as e:
+            log.error("MQTT connect failed: %s — retrying in 10s", e)
+            time.sleep(10)
     client.loop_start()
     return client
 
@@ -82,6 +102,13 @@ def parse_and_publish(client, line):
     values = line.split()
     if len(values) < 10:
         log.warning("Short line, skipping: %s", line)
+        return
+
+    try:
+        for i in (3, 4, 6, 7, 8, 9):
+            float(values[i])
+    except ValueError:
+        log.warning("Non-numeric field, skipping: %s", line)
         return
 
     # KACO Powador RS232 line format (space-separated):
@@ -99,6 +126,8 @@ def parse_and_publish(client, line):
     client.publish("wechselrichter/einspeisung",        values[8],       retain=True)
     client.publish("wechselrichter/temperatur",         values[9],       retain=True)
 
+    client.publish(STATUS_TOPIC, "online", retain=True)
+
     log.info("einspeisung=%sW temp=%s°C zustand=%s", values[8], values[9], betriebszustand)
 
 
@@ -106,19 +135,26 @@ def main():
     log.info("wechselrichter starting — device=%s mqtt=%s", DEVICE, MQTT_HOST)
 
     client = connect_mqtt()
-    publish_discovery(client)
 
     while True:
         try:
-            with serial.Serial(DEVICE) as port:
+            with serial.Serial(DEVICE, timeout=SERIAL_TIMEOUT) as port:
                 log.info("Serial port opened: %s", DEVICE)
+                last_data = time.monotonic()
+                offline = False
                 while True:
                     line = port.readline().decode("utf-8", errors="replace").strip()
-                    if len(line) < 3:
-                        continue
-                    parse_and_publish(client, line)
+                    if len(line) >= 3:
+                        parse_and_publish(client, line)
+                        last_data = time.monotonic()
+                        offline = False
+                    elif not offline and time.monotonic() - last_data > OFFLINE_AFTER:
+                        log.warning("No data for %ds — marking offline", OFFLINE_AFTER)
+                        client.publish(STATUS_TOPIC, "offline", retain=True)
+                        offline = True
         except serial.SerialException as e:
             log.error("Serial error: %s — retrying in 10s", e)
+            client.publish(STATUS_TOPIC, "offline", retain=True)
             time.sleep(10)
         except Exception:
             log.exception("Unexpected error — retrying in 10s")

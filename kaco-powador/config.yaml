@@ -1,6 +1,6 @@
-# https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
+# https://developers.home-assistant.io/docs/apps/configuration/
 name: KACO Powador
-version: "1.1.0"
+version: "1.1.1"
 slug: kaco_powador
 description: KACO Powador solar inverter → MQTT with Home Assistant discovery
 url: "https://github.com/hholle/ha-addons/tree/main/kaco-powador"
