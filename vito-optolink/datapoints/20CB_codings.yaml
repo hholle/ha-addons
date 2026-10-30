@@ -1,0 +1,113 @@
+# Coding level 1/2 values of the Vitotronic 200 (VScotHO1, 20CB), read only.
+# Source: ViessData21 datapoint list DP_VScotHO1.txt (https://github.com/philippoo66/ViessData21), same
+# entries as the coding menu of the controller. Code NN is at 0x27NN (heating circuit A1M1), 0x37NN (M2),
+# 0x57NN (boiler), 0x67NN (hot water) or 0x77NN (general). Values are raw, as shown in the coding menu.
+# Not verified against this unit: addresses missing here (for example code 04) are not in that list.
+
+codings:
+  - {addr: 0x27A0, code: "A0", group: Heizkreis A1M1, len: 1, signed: false, name: "Kennung Fernbedienung A1M1"}
+  - {addr: 0x27A2, code: "A2", group: Heizkreis A1M1, len: 1, signed: false, name: "Speichervorrang A1M1"}
+  - {addr: 0x27A3, code: "A3", group: Heizkreis A1M1, len: 1, signed: true, name: "Frostgrenze A1M1"}
+  - {addr: 0x27A4, code: "A4", group: Heizkreis A1M1, len: 1, signed: false, name: "Frostschutzfunktion A1M1"}
+  - {addr: 0x27A5, code: "A5", group: Heizkreis A1M1, len: 1, signed: false, name: "Sommersparschaltung Schaltschwelle A1M1"}
+  - {addr: 0x27A6, code: "A6", group: Heizkreis A1M1, len: 1, signed: false, name: "Absolute Sommersparschaltung A1M1"}
+  - {addr: 0x27A7, code: "A7", group: Heizkreis A1M1, len: 1, signed: false, name: "Mischersparfunktion M1"}
+  - {addr: 0x27A9, code: "A9", group: Heizkreis A1M1, len: 1, signed: false, name: "Pumpenstillstand A1M1 bei Übergang in reduzierten Betrieb"}
+  - {addr: 0x27B0, code: "B0", group: Heizkreis A1M1, len: 1, signed: false, name: "Raumaufschaltung A1M1"}
+  - {addr: 0x27B2, code: "B2", group: Heizkreis A1M1, len: 1, signed: false, name: "Raumgerät Raumeinfluß HK1"}
+  - {addr: 0x27B5, code: "B5", group: Heizkreis A1M1, len: 1, signed: false, name: "Sommersparschaltung RS A1M1"}
+  - {addr: 0x27C5, code: "C5", group: Heizkreis A1M1, len: 1, signed: false, name: "Vorlauf - Minimalbegrenzung A1M1"}
+  - {addr: 0x27C6, code: "C6", group: Heizkreis A1M1, len: 1, signed: false, name: "Vorlauf - Maximalbegrenzung A1M1"}
+  - {addr: 0x27D3, code: "D3", group: Heizkreis A1M1, len: 1, signed: false, name: "Neigung Heizkennlinie A1"}
+  - {addr: 0x27D4, code: "D4", group: Heizkreis A1M1, len: 1, signed: true, name: "Niveau Heizkennlinie A1"}
+  - {addr: 0x27D5, code: "D5", group: Heizkreis A1M1, len: 1, signed: false, name: "Wirkung Betriebsarten-umschaltung A1M1"}
+  - {addr: 0x27E1, code: "E1", group: Heizkreis A1M1, len: 1, signed: false, name: "Bereich Tagsolltemperatur Fernbedienung A1M1"}
+  - {addr: 0x27E2, code: "E2", group: Heizkreis A1M1, len: 1, signed: false, name: "Raumgerät Istwertkorrektur A1M1"}
+  - {addr: 0x27E5, code: "E5", group: Heizkreis A1M1, len: 1, signed: false, name: "Kennung Pumpe Heizkreis A1"}
+  - {addr: 0x27E6, code: "E6", group: Heizkreis A1M1, len: 1, signed: false, name: "Maximale Drehzahl geregelte Pumpe A1M1"}
+  - {addr: 0x27E7, code: "E7", group: Heizkreis A1M1, len: 1, signed: false, name: "Minimale Drehzahl geregelte Pumpe A1M1"}
+  - {addr: 0x27E8, code: "E8", group: Heizkreis A1M1, len: 1, signed: false, name: "Solldrehzahl Pumpe im Nebenbetrieb A1M1"}
+  - {addr: 0x27E9, code: "E9", group: Heizkreis A1M1, len: 1, signed: false, name: "Reduzierte Drehzahl geregelte Pumpe A1M1"}
+  - {addr: 0x27F1, code: "F1", group: Heizkreis A1M1, len: 1, signed: false, name: "Estrichfunktion A1M1"}
+  - {addr: 0x27F2, code: "F2", group: Heizkreis A1M1, len: 1, signed: false, name: "Zeitbegrenzung Party/ Betriebsarten-Umschaltung A1"}
+  - {addr: 0x27F8, code: "F8", group: Heizkreis A1M1, len: 1, signed: true, name: "Start Modifizierung Raumtemp. Soll red. HK1"}
+  - {addr: 0x27F9, code: "F9", group: Heizkreis A1M1, len: 1, signed: true, name: "Ende Modifizierung Raumtemp. Soll red. HK1"}
+  - {addr: 0x27FA, code: "FA", group: Heizkreis A1M1, len: 1, signed: false, name: "Überhöhung Vorlauftemperatur Soll HK1"}
+  - {addr: 0x27FB, code: "FB", group: Heizkreis A1M1, len: 1, signed: false, name: "Dauer Überhöhung Vorlauftemperatur Soll HK1"}
+  - {addr: 0x37A0, code: "A0", group: Heizkreis M2, len: 1, signed: false, name: "Kennung Fernbedienung M2"}
+  - {addr: 0x37A2, code: "A2", group: Heizkreis M2, len: 1, signed: false, name: "Speichervorrang M2"}
+  - {addr: 0x37A3, code: "A3", group: Heizkreis M2, len: 1, signed: true, name: "Frostgrenze M2"}
+  - {addr: 0x37A4, code: "A4", group: Heizkreis M2, len: 1, signed: false, name: "Frostschutzfunktion M2"}
+  - {addr: 0x37A5, code: "A5", group: Heizkreis M2, len: 1, signed: false, name: "Sommersparschaltung Schaltschwelle M2"}
+  - {addr: 0x37A6, code: "A6", group: Heizkreis M2, len: 1, signed: false, name: "Absolute Sommersparschaltung M2"}
+  - {addr: 0x37A7, code: "A7", group: Heizkreis M2, len: 1, signed: false, name: "Mischersparfunktion M2"}
+  - {addr: 0x37A8, code: "A8", group: Heizkreis M2, len: 1, signed: false, name: "Einfluss auf Interne Pumpe"}
+  - {addr: 0x37A9, code: "A9", group: Heizkreis M2, len: 1, signed: false, name: "Pumpenstillstand M2 bei Übergang in reduzierten Betrieb"}
+  - {addr: 0x37B0, code: "B0", group: Heizkreis M2, len: 1, signed: false, name: "Raumaufschaltung M2"}
+  - {addr: 0x37B2, code: "B2", group: Heizkreis M2, len: 1, signed: false, name: "Raumgerät Raumeinfluß HK2"}
+  - {addr: 0x37B5, code: "B5", group: Heizkreis M2, len: 1, signed: false, name: "Sommersparschaltung RS M2"}
+  - {addr: 0x37C5, code: "C5", group: Heizkreis M2, len: 1, signed: false, name: "Vorlauf - Minimalbegrenzung M2"}
+  - {addr: 0x37C6, code: "C6", group: Heizkreis M2, len: 1, signed: false, name: "Vorlauf - Maximalbegrenzung M2"}
+  - {addr: 0x37D3, code: "D3", group: Heizkreis M2, len: 1, signed: false, name: "Neigung Heizkennlinie M2"}
+  - {addr: 0x37D4, code: "D4", group: Heizkreis M2, len: 1, signed: true, name: "Niveau Heizkennlinie M2"}
+  - {addr: 0x37D5, code: "D5", group: Heizkreis M2, len: 1, signed: false, name: "Wirkung Betriebsarten-umschaltung M2"}
+  - {addr: 0x37E1, code: "E1", group: Heizkreis M2, len: 1, signed: false, name: "Bereich Tagsolltemperatur Fernbedienung M2"}
+  - {addr: 0x37E2, code: "E2", group: Heizkreis M2, len: 1, signed: false, name: "Raumgerät Istwertkorrektur M2"}
+  - {addr: 0x37E5, code: "E5", group: Heizkreis M2, len: 1, signed: false, name: "Kennung Pumpe Heizkreis M2"}
+  - {addr: 0x37E6, code: "E6", group: Heizkreis M2, len: 1, signed: false, name: "Maximale Drehzahl geregelte Pumpe M2"}
+  - {addr: 0x37E7, code: "E7", group: Heizkreis M2, len: 1, signed: false, name: "Minimale Drehzahl geregelte Pumpe M2"}
+  - {addr: 0x37E8, code: "E8", group: Heizkreis M2, len: 1, signed: false, name: "Solldrehzahl Pumpe im Nebenbetrieb M2"}
+  - {addr: 0x37E9, code: "E9", group: Heizkreis M2, len: 1, signed: false, name: "Reduzierte Drehzahl geregelte Pumpe M2"}
+  - {addr: 0x37F1, code: "F1", group: Heizkreis M2, len: 1, signed: false, name: "Estrichfunktion M2"}
+  - {addr: 0x37F2, code: "F2", group: Heizkreis M2, len: 1, signed: false, name: "Zeitbegrenzung Party/ Betriebsarten-Umschaltung M2"}
+  - {addr: 0x37F8, code: "F8", group: Heizkreis M2, len: 1, signed: true, name: "Start Modifizierung Raumtemp. Soll red. HK2"}
+  - {addr: 0x37F9, code: "F9", group: Heizkreis M2, len: 1, signed: true, name: "Ende Modifizierung Raumtemp. Soll red. HK2"}
+  - {addr: 0x37FA, code: "FA", group: Heizkreis M2, len: 1, signed: false, name: "Überhöhung Vorlauftemperatur Soll HK2"}
+  - {addr: 0x37FB, code: "FB", group: Heizkreis M2, len: 1, signed: false, name: "Dauer Überhöhung Vorlauftemperatur Soll HK2"}
+  - {addr: 0x5706, code: "06", group: Kessel, len: 1, signed: false, name: "Kesselmaximal-Temperatur"}
+  - {addr: 0x5721, code: "21", group: Kessel, len: 2, signed: false, name: "Betriebsstunden Brenner für Wartung"}
+  - {addr: 0x5723, code: "23", group: Kessel, len: 1, signed: false, name: "Zeitintervall für Wartung"}
+  - {addr: 0x5724, code: "24", group: Kessel, len: 1, signed: false, name: "Status der Wartung"}
+  - {addr: 0x5728, code: "28", group: Kessel, len: 1, signed: false, name: "Intervallzuendung Brenner alle 5 Stunden"}
+  - {addr: 0x572E, code: "2E", group: Kessel, len: 1, signed: false, name: "Kennung Externe Erweiterung"}
+  - {addr: 0x572F, code: "2F", group: Kessel, len: 1, signed: false, name: "Entlüftungs-/ Befüllungsprogramm"}
+  - {addr: 0x5730, code: "30", group: Kessel, len: 1, signed: false, name: "Kennung Interne Umwälzpumpe"}
+  - {addr: 0x5731, code: "31", group: Kessel, len: 1, signed: false, name: "Solldrehzahl Interne Pumpe"}
+  - {addr: 0x5732, code: "32", group: Kessel, len: 1, signed: false, name: "Einfluß Extern Sperren auf Pumpen"}
+  - {addr: 0x5734, code: "34", group: Kessel, len: 1, signed: false, name: "Einfluß Extern Anfordern auf Pumpen"}
+  - {addr: 0x6756, code: "56", group: Warmwasser, len: 1, signed: false, name: "Warmwasser-Solltemperatur-Bereich"}
+  - {addr: 0x6758, code: "58", group: Warmwasser, len: 1, signed: false, name: "Warmwasser-Solltemperatur 2"}
+  - {addr: 0x6759, code: "59", group: Warmwasser, len: 1, signed: false, name: "Einschaltpunkt Speicher"}
+  - {addr: 0x675B, code: "5B", group: Warmwasser, len: 1, signed: false, name: "Anbindung Speicher an Hydr. Weiche"}
+  - {addr: 0x6760, code: "60", group: Warmwasser, len: 1, signed: false, name: "Offset für Kessel- bzw Vorlaufsolltemperatur (auf Warmwasser-Solltemperatur)"}
+  - {addr: 0x6762, code: "62", group: Warmwasser, len: 1, signed: false, name: "Nachlauf Speicherladepumpe"}
+  - {addr: 0x6765, code: "65", group: Warmwasser, len: 1, signed: false, name: "Bauart Umschaltventil"}
+  - {addr: 0x6767, code: "67", group: Warmwasser, len: 1, signed: false, name: "WW-Solltemperatur bei Nachladeunterdrückung"}
+  - {addr: 0x676C, code: "6C", group: Warmwasser, len: 1, signed: false, name: "Drehzahl Interne Pumpe bei WW-Bereitung"}
+  - {addr: 0x676D, code: "6D", group: Warmwasser, len: 1, signed: false, name: "Anzapffunktion"}
+  - {addr: 0x676F, code: "6F", group: Warmwasser, len: 1, signed: false, name: "Begrenzung Warmwasserleistung"}
+  - {addr: 0x6771, code: "71", group: Warmwasser, len: 1, signed: false, name: "Zirkulationspumpe bei Speicherladung 1. WW-Sollwert"}
+  - {addr: 0x6772, code: "72", group: Warmwasser, len: 1, signed: false, name: "Zirkulationspumpe bei Speicherladung 2. WW-Sollwert"}
+  - {addr: 0x6773, code: "73", group: Warmwasser, len: 1, signed: false, name: "Intervall-Freigabe Zirkulationspumpe"}
+  - {addr: 0x7700, code: "00", group: Allgemein, len: 1, signed: false, name: "Heizkreis-Warmwasserschema"}
+  - {addr: 0x7701, code: "01", group: Allgemein, len: 1, signed: false, name: "Anlagentyp"}
+  - {addr: 0x7752, code: "52", group: Allgemein, len: 1, signed: false, name: "Sensor Hydraulische Weiche"}
+  - {addr: 0x7753, code: "53", group: Allgemein, len: 1, signed: false, name: "Rangierung Relais K12"}
+  - {addr: 0x7754, code: "54", group: Allgemein, len: 1, signed: false, name: "Solarregelung"}
+  - {addr: 0x7776, code: "76", group: Allgemein, len: 1, signed: false, name: "Kommunikationsmodul"}
+  - {addr: 0x7777, code: "77", group: Allgemein, len: 1, signed: false, name: "Viessmann - Teilnehmernummer"}
+  - {addr: 0x7778, code: "78", group: Allgemein, len: 1, signed: false, name: "LON - Kommunikation Freigeben/ Sperren"}
+  - {addr: 0x7779, code: "79", group: Allgemein, len: 1, signed: false, name: "Zentraler Fehlermanager der Anlage"}
+  - {addr: 0x777B, code: "7B", group: Allgemein, len: 1, signed: false, name: "Uhrzeit auf LON"}
+  - {addr: 0x777F, code: "7F", group: Allgemein, len: 1, signed: false, name: "Unterscheidung Einfamilienhaus - Mehrparteienhaus"}
+  - {addr: 0x7780, code: "80", group: Allgemein, len: 1, signed: false, name: "Verzögerung Fehleranzeige"}
+  - {addr: 0x7781, code: "81", group: Allgemein, len: 1, signed: false, name: "Funktion Uhr"}
+  - {addr: 0x7788, code: "88", group: Allgemein, len: 1, signed: false, name: "Anzeigemodus Celsius - Fahrenheit"}
+  - {addr: 0x7790, code: "90", group: Allgemein, len: 1, signed: false, name: "Zeitkonstante Aussentemperatur"}
+  - {addr: 0x7791, code: "91", group: Allgemein, len: 1, signed: false, name: "Zuordnung externe Betriebsarten-umschaltung"}
+  - {addr: 0x7795, code: "95", group: Allgemein, len: 1, signed: false, name: "Konfiguration Vitocom 100"}
+  - {addr: 0x7797, code: "97", group: Allgemein, len: 1, signed: false, name: "Konfiguration  Aussentemperatur"}
+  - {addr: 0x7798, code: "98", group: Allgemein, len: 1, signed: false, name: "Viessmann - Anlagennummer"}
+  - {addr: 0x779B, code: "9B", group: Allgemein, len: 1, signed: false, name: "VT_Solltemperatur bei externer Anforderung"}
+  - {addr: 0x779C, code: "9C", group: Allgemein, len: 1, signed: false, name: "Überwachung LON-Teilnehmer"}
+  - {addr: 0x779F, code: "9F", group: Allgemein, len: 1, signed: false, name: "Differenztemperatur VT-Erzeugung"}

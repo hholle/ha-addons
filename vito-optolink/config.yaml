@@ -1,0 +1,41 @@
+# https://developers.home-assistant.io/docs/apps/configuration/
+name: Vito Optolink
+version: "0.7.0"
+slug: vito_optolink
+description: Viessmann Vitotronic (Optolink, P300) direct to Home Assistant, no vcontrold
+url: "https://github.com/hholle/ha-addons/tree/main/vito-optolink"
+arch:
+  - amd64
+services:
+  - 'mqtt:need'
+devices:
+  - /dev/ttyUSBVito
+init: false
+uart: true
+map:
+  - share:rw
+#image: "ghcr.io/hholle/{arch}-addon-vito-optolink"
+options:
+  device: /dev/ttyUSBVito
+  poll_fast_s: 10
+  poll_slow_s: 60
+  takt_warn_starts_h: 6
+  publish_codings: true
+  log_level: info
+  mode: run
+  scan_ranges: "0800-08FF,5500-55FF"
+  scan_rounds: 30
+  scan_interval_s: 10
+  reference_temps: ""
+schema:
+  device: str
+  poll_fast_s: int(2,3600)
+  poll_slow_s: int(10,3600)
+  takt_warn_starts_h: int(1,60)
+  publish_codings: bool
+  log_level: list(debug|info|warning|error)
+  mode: list(run|discover|codings)
+  scan_ranges: str
+  scan_rounds: int(2,500)
+  scan_interval_s: int(1,600)
+  reference_temps: str?

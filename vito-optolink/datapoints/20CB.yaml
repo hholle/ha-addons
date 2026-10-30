@@ -1,0 +1,101 @@
+# Datapoints for Vitotronic 200 (VScotHO1, device ID 20CB).
+# Taken over 1:1 from the vcontrold add-on (same uid, names and addresses) so entities and
+# dashboards stay intact. Enum texts are the ones the old vcontrold.xml produced.
+#
+# Fields: id, uid, name, addr, len, type (int|enum), signed, scale, unit, enum,
+#         group (fast|slow), component (sensor|binary_sensor), device_class, state_class,
+#         payload_on / payload_off (binary_sensor only)
+#
+# verified: false = address not confirmed against the display yet.
+
+device_id: "20CB"
+
+enums:
+  betriebsart:
+    0x00: Abschaltbetrieb
+    0x01: Nur Warmwasser
+    0x02: Heizen und Warmwasser
+    0x03: Dauernd red. Betrieb
+    0x04: Dauernd Normalbetrieb
+  betriebsart_hk:
+    0x00: Abschaltbetr. (Dauernd)
+    0x01: Red. Betrieb (Schaltuhr)
+    0x02: Normalbetrieb (Schaltuhr)
+    0x03: Normalbetrieb (Dauernd)
+  umschaltventil:
+    0x00: UNDEFINIERT
+    0x01: Heizung
+    0x02: Mittelstellung
+    0x03: Warmwasser
+  aus_an:
+    0x00: aus
+    0x01: an
+    0x03: an   # vcontrold repo (RT unit): 20CB heating circuit pump returns 03 when it runs in night mode
+  pumpe_intern:
+    0x00: aus
+    0x01: an
+    0x02: "?"
+    0x03: aus
+  flamme:
+    0x00: aus
+    0x08: an   # discovery run 2026-10-29: 55DE is 0 (off), 8, 11 (0x0B) and 15 (0x0F) while the burner runs
+    0x0B: an
+    0x0F: an
+  stoerung:
+    0x00: kein Fehler
+    0x01: FEHLERMELDUNG
+
+datapoints:
+  # --- Temperaturen ---
+  - {id: temp_aussen,      uid: vcontrold_temp_aussen,      name: Außentemperatur,              addr: 0x0800, len: 2, type: int, signed: true, scale: 0.1, unit: "°C", device_class: temperature, state_class: measurement, group: slow}
+  - {id: temp_kessel_ist,  uid: vcontrold_temp_kessel_ist,  name: Kesseltemperatur (ist),       addr: 0x0810, len: 2, type: int, signed: true, scale: 0.1, unit: "°C", device_class: temperature, state_class: measurement, group: fast}
+  # 555A is a single byte (ViessData21: Kesselsoll_eff, Byte). Seen: 37 and 50 while the burner runs, but 249 / 251 when it is off
+  # (a placeholder, no setpoint), so everything above 100 is published as unknown. Values like 93 were also seen and are not understood.
+  - {id: temp_kessel_soll, uid: vcontrold_temp_kessel_soll, name: Kesseltemperatur (soll),      addr: 0x555A, len: 1, type: int, unit: "°C", device_class: temperature, state_class: measurement, group: fast, max_value: 100, verified: false}
+  - {id: temp_ww_ist,      uid: vcontrold_temp_ww_ist,      name: Warmwassertemperatur (ist),   addr: 0x0804, len: 2, type: int, signed: true, scale: 0.1, unit: "°C", device_class: temperature, state_class: measurement, group: slow}
+  - {id: temp_ww_soll,     uid: vcontrold_temp_ww_soll,     name: Warmwassertemperatur (soll),  addr: 0x6300, len: 1, type: int, unit: "°C", device_class: temperature, state_class: measurement, group: slow}
+  - {id: temp_speicher,    uid: vcontrold_temp_speicher,    name: Speichertemperatur,           addr: 0x0812, len: 2, type: int, signed: true, scale: 0.1, unit: "°C", device_class: temperature, state_class: measurement, group: fast}
+  - {id: temp_ww_auslauf,  uid: vcontrold_temp_ww_auslauf,  name: WW Auslauftemperatur,         addr: 0x0814, len: 2, type: int, signed: true, scale: 0.1, unit: "°C", device_class: temperature, state_class: measurement, group: slow}
+  - {id: temp_vl_soll,     uid: vcontrold_temp_vl_soll,     name: Vorlauftemperatur (soll),     addr: 0x2544, len: 2, type: int, signed: true, scale: 0.1, unit: "°C", device_class: temperature, state_class: measurement, group: fast}
+  # 0x0808 is the flue gas sensor (openv wiki, ViessData21 list for VScotHO1: low-pass value at 0x0816), not the return flow. 0x080A (return flow 17A) never changed in our scans.
+  - {id: temp_abgas,       uid: vito_temp_abgas,            name: Abgastemperatur,              addr: 0x0816, len: 2, type: int, signed: true, scale: 0.1, unit: "°C", device_class: temperature, state_class: measurement, group: fast, verified: false}
+  - {id: temp_raum_nor,    uid: vcontrold_temp_raum_nor,    name: Raumsolltemperatur Normal,    addr: 0x2306, len: 1, type: int, unit: "°C", device_class: temperature, state_class: measurement, group: slow}
+  - {id: temp_raum_red,    uid: vcontrold_temp_raum_red,    name: Raumsolltemperatur Reduziert, addr: 0x2307, len: 1, type: int, unit: "°C", device_class: temperature, state_class: measurement, group: slow}
+
+  # --- Zähler ---
+  - {id: starts_brenner,   uid: vcontrold_starts_brenner,   name: Brennerstarts,                addr: 0x088A, len: 4, type: int, state_class: total_increasing, group: fast}
+  # 08A7: vcontrold repo "Brennerstunden Stufe 1", 4 bytes in seconds; discovery runs show the low byte counting up in 10 s steps
+  - {id: betriebsstunden_brenner, uid: vito_betriebsstunden_brenner, name: Brennerbetriebsstunden, addr: 0x08A7, len: 4, type: int, scale: 0.000277778, unit: "h", device_class: duration, state_class: total_increasing, group: slow, verified: false}
+  # 7663 (old "Drehzahl Pumpe intern") is a 0/1 status of the heating circuit pump, not a speed: removed
+  # 55D3: 0..99 in 18 steps while burning, 0 when off (discovery run 2026-10-29) -> burner modulation in %
+  - {id: modulation,       uid: vito_modulation,            name: Brennerleistung (Modulation), addr: 0x55D3, len: 1, type: int, unit: "%", state_class: measurement, group: fast}
+
+  # --- Heizkennlinie (old config read Neigung as 2-byte short from a 1-byte answer; read here as 1 byte /10) ---
+  - {id: kennlinie_neigung, uid: vcontrold_kennlinie_neigung, name: Heizkennlinie Neigung, addr: 0x27D3, len: 1, type: int, scale: 0.1, state_class: measurement, group: slow, verified: false}
+  - {id: kennlinie_niveau,  uid: vcontrold_kennlinie_niveau,  name: Heizkennlinie Niveau,  addr: 0x27D4, len: 1, type: int, signed: true, state_class: measurement, group: slow}
+
+  # --- Warmwasser-Ladung (addresses from the ViessData21 list for VScotHO1; unverified on this unit) ---
+  - {id: ww_soll_effektiv, uid: vito_ww_soll_effektiv, name: Warmwasser Soll (effektiv),  addr: 0x6500, len: 2, type: int, scale: 0.1, unit: "°C", device_class: temperature, state_class: measurement, group: fast, verified: false}
+  - {id: ww_status,        uid: vito_ww_status,        name: Warmwasserbereitung Status (roh), addr: 0x650A, len: 1, type: int, state_class: measurement, group: fast, verified: false}
+  - {id: flow_switch,      uid: vito_flow_switch,      name: Flow Switch (roh),             addr: 0x0883, len: 1, type: int, state_class: measurement, group: fast, verified: false}
+  - {id: temp_vl_gem,      uid: vito_temp_vl_gem,      name: Vorlauftemperatur gemischt,    addr: 0x081A, len: 2, type: int, signed: true, scale: 0.1, unit: "°C", device_class: temperature, state_class: measurement, group: fast, verified: false}
+
+  # --- Candidates for the burner output, to be compared with 'modulation' (0x55D3). Remove the losers once one is confirmed ---
+  # A38F: forum post for VScotHO1 (openv forum #348): 1 byte, value / 2 = burner output in %. A305: ViessData21 "Modulationsgrad" (Byte)
+  - {id: leistung_a38f,    uid: vito_leistung_a38f,    name: Brennerleistung A38F (Test),   addr: 0xA38F, len: 1, type: int, scale: 0.5, unit: "%", state_class: measurement, category: diagnostic, group: fast, verified: false}
+  - {id: modulationsgrad_a305, uid: vito_modulationsgrad_a305, name: Modulationsgrad A305 (Test), addr: 0xA305, len: 1, type: int, unit: "%", state_class: measurement, category: diagnostic, group: fast, verified: false}
+
+
+  # --- Text / Enum ---
+  - {id: betriebsart,      uid: vcontrold_betriebsart,      name: Betriebsart,                  addr: 0x2323, len: 1, type: enum, enum: betriebsart, group: slow}
+  # 0x2500 is "Status Frostwarnung M1" in the vcontrold repo, not the current operating mode. Texts from the old config may not fit.
+  - {id: betriebsart_hk,   uid: vcontrold_betriebsart_hk,   name: Betriebsart Heizkreis,        addr: 0x2500, len: 1, type: enum, enum: betriebsart_hk, group: slow, verified: false}
+  - {id: umschaltventil,   uid: vcontrold_umschaltventil,   name: Umschaltventil,               addr: 0x0A10, len: 1, type: enum, enum: umschaltventil, group: fast}
+
+  # --- Binärsensoren ---
+  - {id: flamme,           uid: vcontrold_flamme,           name: Brennerflamme,                 addr: 0x55DE, len: 1, type: enum, enum: flamme, component: binary_sensor, device_class: heat, payload_on: an, payload_off: aus, group: fast}
+  - {id: pumpe_speicher,   uid: vcontrold_pumpe_speicher,   name: Pumpe Speicher,               addr: 0x6513, len: 1, type: enum, enum: aus_an, component: binary_sensor, device_class: running, payload_on: an, payload_off: aus, group: fast}
+  - {id: pumpe_intern,     uid: vcontrold_pumpe_intern,     name: Pumpe intern,                 addr: 0x7660, len: 1, type: enum, enum: pumpe_intern, component: binary_sensor, device_class: running, payload_on: an, payload_off: aus, group: fast}
+  - {id: pumpe_hk,         uid: vcontrold_pumpe_hk,         name: Pumpe Heizkreis,              addr: 0x2906, len: 1, type: enum, enum: aus_an, component: binary_sensor, device_class: running, payload_on: an, payload_off: aus, group: fast}
+  - {id: pumpe_zirku,      uid: vcontrold_pumpe_zirku,      name: Pumpe Zirkulation,            addr: 0x6515, len: 1, type: enum, enum: aus_an, component: binary_sensor, device_class: running, payload_on: an, payload_off: aus, group: slow}
+  - {id: stoerung,         uid: vcontrold_stoerung,         name: Störung,                      addr: 0x0A82, len: 1, type: enum, enum: stoerung, component: binary_sensor, device_class: problem, payload_on: FEHLERMELDUNG, payload_off: kein Fehler, group: slow}
