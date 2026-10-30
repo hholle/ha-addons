@@ -41,7 +41,7 @@ rootfs/
 ### electricity-meter / kaco-powador — Python
 ```
 run.sh          # bashio config → env vars → exec Python
-zaehler.py / kaco-powador.py
+zaehler.py / wechselrichter.py (kaco-powador)
 ```
 
 ### warema-wms — Node.js 24 + s6-overlay
@@ -65,8 +65,8 @@ All add-ons publish HA MQTT discovery payloads (retained) at startup → entitie
 
 ## Python add-ons specifics
 
-- Both use `paho-mqtt>=2.0` with `CallbackAPIVersion.VERSION1`
-- **electricity-meter**: IEC 62056-21 D0 — sends `/?!\r\n`, reads until `!`, parses OBIS with regex. 300 baud 7E1. `iec62056` lib is installed but manual parsing used for ACE3000 compatibility.
+- Both use `paho-mqtt>=2.0` with `CallbackAPIVersion.VERSION2`
+- **electricity-meter**: IEC 62056-21 D0 — sends `/?!\r\n`, reads until `!`, parses OBIS with regex. 300 baud 7E1. Manual regex parsing (no `iec62056` lib) for ACE3000 compatibility.
 - **kaco-powador**: inverter pushes lines continuously; bridge reads and publishes all fields. Betriebszustand numeric codes mapped to strings.
 
 ## warema-wms specifics
