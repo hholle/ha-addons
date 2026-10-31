@@ -8,6 +8,7 @@ ENV LANG C.UTF-8
 RUN pip3 install --no-cache-dir pyserial "paho-mqtt>=2.0"
 
 COPY run.sh /
+COPY wmslib /wmslib
 COPY app /app
 
 RUN chmod a+x /run.sh

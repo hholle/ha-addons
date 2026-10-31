@@ -1,6 +1,6 @@
 # https://developers.home-assistant.io/docs/apps/configuration/
 name: Warema WMS
-version: "2.0.0"
+version: "2.2.1"
 slug: warema_wms
 description: Warema WMS blinds, awnings and roofs via WMS USB stick → MQTT with HA discovery
 url: "https://github.com/hholle/ha-addons/tree/main/warema-wms"
@@ -18,6 +18,7 @@ options:
   polling_interval: 30000
   moving_interval: 1000
   rescan_interval: 0
+  quality_interval: 300
   log_level: info
 schema:
   wms_serial_port: device(subsystem=tty)
@@ -30,4 +31,5 @@ schema:
   polling_interval: int(5000,600000)?
   moving_interval: int(100,60000)?
   rescan_interval: int(0,1440)?
+  quality_interval: int(0,3600)?
   log_level: list(error|warning|info|debug)?

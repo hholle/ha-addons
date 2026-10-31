@@ -1,5 +1,25 @@
 # Changelog
 
+## 2.2.1
+
+- Type 2A (Lamellendach): polled once at startup (same as after a command: until it reports standstill, or 3 unanswered polls), so Home Assistant no longer starts with a stale retained tilt/state.
+
+## 2.2.0
+
+- Devices shown as one grouped HA device (option `device_groups`) now get their serial number in the names of the diagnostic entities (`1152669 TX signal (RSSI)`), so the entities of the members can be told apart.
+- Fix: position answers with angle byte `FF` (awnings) no longer publish a tilt of 171; the angle is simply absent.
+- Verified on the WMS USB-Stick (firmware 37605107): connection quality and wave work.
+- The WMS protocol now lives in a generic library, `wmslib` (frame builders and decoder, command objects, serial driver with queue). The add-on only handles MQTT and Home Assistant; `app/wms.py` is a thin compatibility layer.
+- New per-device **Ping** button (radio ping `5040`, silent) with a **Last ping** sensor, and an **Identify** button (wave).
+- New option `quality_interval` and per-device TX/RX link quality (LQI) and signal (RSSI) diagnostics, from the stick's connection quality request. Appears only for devices where the stick answers; switches itself off if the stick does not support it.
+- Library also supports generic memory reads (`read_block`) and decodes failures, channel measurement and connection quality frames. Memory writes exist only as a frame builder and are not used.
+- Documentation: `PROTOCOL.md` (complete frame description), `MEMORY_MAP.md` (radio motor memory map), `DEVICES.md`.
+
+## 2.1.0
+
+- New diagnostic entities per polled device: Reachability, Response time, Poll retries (1 h), Offline events, Last seen (the stick reports no signal strength, so these are derived from the polls).
+- More logging at `info`: position changes, commands from Home Assistant, polls answered only after retries, timeouts with the number of attempts, MQTT disconnects and a link summary per device every 5 minutes.
+
 ## 2.0.0
 
 - Rewritten in Python (pyserial + paho-mqtt) on the standard Home Assistant Python base image; Node.js, the source build of `serialport` and the s6 service files are gone. Same options, same MQTT topics and entities.

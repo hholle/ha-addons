@@ -8,7 +8,7 @@ export MQTT_PASSWORD=$(bashio::services mqtt "password")
 
 # Options → environment (unset optional options stay unset)
 for key in wms_serial_port wms_key wms_pan_id wms_channel ignored_devices force_devices \
-           device_groups polling_interval moving_interval rescan_interval log_level; do
+           device_groups polling_interval moving_interval rescan_interval quality_interval log_level; do
     if bashio::config.has_value "${key}"; then
         export "${key^^}=$(bashio::config "${key}")"
     fi

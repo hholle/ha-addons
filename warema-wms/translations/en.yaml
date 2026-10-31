@@ -29,6 +29,9 @@ configuration:
   rescan_interval:
     name: Rescan interval (min)
     description: Scan for new devices every N minutes. 0 = only on startup and via the "Scan for devices" button.
+  quality_interval:
+    name: Signal quality interval (s)
+    description: How often the stick is asked for each device's link quality (LQI/RSSI). 0 = off. Switches itself off if the stick does not support it.
   log_level:
     name: Log level
     description: debug logs every frame sent and received.

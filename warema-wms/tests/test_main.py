@@ -40,7 +40,8 @@ class BridgeTest(unittest.TestCase):
         self.assertNotIn("state_topic", json.loads(bridge.published["homeassistant/cover/5/5/config"]))
         self.assertIn("tilt_command_topic", json.loads(bridge.published["homeassistant/cover/6/6/config"]))
         self.assertNotIn("homeassistant/cover/7/7/config", bridge.published)
-        stick.add_blind.assert_any_call(1132530, no_poll=True)   # 2A is never polled
+        stick.add_blind.assert_any_call(1132530, no_poll=True)   # 2A is not polled regularly,
+        stick.watch.assert_called_once_with(1132530)              # only once at startup (and after commands)
         stick.add_blind.assert_any_call(1152669, no_poll=False)
 
     def test_ignored_device(self):

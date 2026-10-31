@@ -34,6 +34,7 @@ Remote controls (`07`) and web controllers (`09`) are ignored.
 | `device_groups` | – | Show several serial numbers as one HA device: `Name:snr1,snr2;Other:snr3` |
 | `polling_interval` | `30000` | Position poll interval in ms (5000–600000) |
 | `moving_interval` | `1000` | Poll interval while a blind is moving, in ms (100–60000) |
+| `quality_interval` | `300` | Seconds between link quality requests to the stick (LQI/RSSI per device). `0` = off. See "Radio link diagnostics". |
 | `rescan_interval` | `0` | Minutes between scans for new devices. `0` = only at startup and on demand (below). |
 | `log_level` | `info` | `error`, `warning`, `info` or `debug` (debug logs every frame) |
 
@@ -47,6 +48,33 @@ wms_channel: 17
 force_devices: "1132530:2A,1152669:25,1195016:25"
 device_groups: "Terrassendach:1132530,1152669,1195016"
 ```
+
+## Radio link diagnostics
+
+The WMS stick does not report a signal strength (RSSI). To still see how well a device is reachable, every polled device (awnings, blinds; not the tilt-only type 2A, which is never polled) gets these diagnostic entities, updated every minute:
+
+| Entity | Meaning |
+|---|---|
+| Reachability | Share of position polls answered in the last hour (%) |
+| Response time | Mean time from sending a poll to the answer (ms) |
+| Poll retries (1 h) | Extra attempts needed in the last hour |
+| Offline events | How often the device was set offline since the add-on started |
+| Last seen | Time of the last answer |
+
+They stay visible while the device itself is offline. With `log_level: info` the log shows every position change, every command from Home Assistant, polls that needed retries and a link summary per device every 5 minutes.
+
+### Ping, identify and signal quality (2.2.0)
+
+- **Ping** (button, diagnostic): a silent radio ping (`5040`); the device does not move. The result is shown in the **Last ping** sensor (`ok (42 ms)` or `no answer`) and in the log.
+- **Identify** (button): makes the device wave: a short move or blink.
+- **TX/RX link quality (LQI) and signal (RSSI)** sensors: values the stick reports for each device. They appear for a device only after the stick has answered
+  once. The WMS USB-Stick (firmware 37605107) supports it; if another stick does not, the add-on logs one warning and stops asking. LQI is about 200–230 on a good link; the RSSI values of the
+  two directions have different scales (raw bytes, use them relatively per device).
+
+## Library
+
+The protocol code is a separate, dependency-light Python package, `wmslib`, in this folder (only `pyserial` is needed). It builds and decodes frames and has a driver with a
+command queue: `from wmslib import Stick, codec`. The add-on uses it; it can also be used on its own. The protocol is described in `PROTOCOL.md` and `MEMORY_MAP.md`.
 
 ## Adding new devices
 
