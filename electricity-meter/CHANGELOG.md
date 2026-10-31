@@ -1,5 +1,9 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.2.1
+
+- Zähler-ID: OBIS codes with letters (C.1, C.1.0) are now parsed and a few alternative ID codes are tried; the first telegram is logged once to show which codes the meter sends
+
 ## 1.2.0
 
 - Verify the telegram's BCC checksum; corrupted telegrams are discarded instead of published

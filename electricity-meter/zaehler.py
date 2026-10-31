@@ -63,6 +63,8 @@ OBIS_MAP = {
 DIAG_MAP = {
     "C.1": ("zaehler/id", "zaehler_id", "Zähler-ID"),
 }
+# Other OBIS codes under which meters send their ID; the first one present in the telegram is used.
+DIAG_ALIASES = {"C.1": ("C.1.0", "0.0.0", "96.1.0", "0.0.1")}
 
 # Discovery IDs of entities published by earlier versions. Their retained discovery
 # configs are cleared on every connect so HA removes the dead entities.
@@ -75,8 +77,8 @@ LEGACY_IDS = (
 
 STX, ETX = b"\x02", b"\x03"
 
-# Regex: matches 1.8.0(001234.567*kWh) or 1.7.0(000.345*kW)
-_OBIS_RE = re.compile(r"(\d+\.\d+\.\d+)\(([^*)\s]+)(?:\*([^)]+))?\)")
+# Regex: matches 1.8.0(001234.567*kWh), 1.7.0(000.345*kW) and codes with letters such as C.1.0(12345678)
+_OBIS_RE = re.compile(r"([0-9A-Za-z]+\.[0-9A-Za-z]+(?:\.[0-9A-Za-z]+)?)\(([^*)\s]+)(?:\*([^)]+))?\)")
 
 
 def parse_telegram(lines):
@@ -208,6 +210,7 @@ def main():
             ) as port:
                 log.info("Serial port opened: %s", DEVICE)
                 failures = 0
+                logged_first = False
                 while True:
                     started = time.monotonic()
                     lines, bcc_ok = read_telegram(port)
@@ -223,10 +226,15 @@ def main():
                         log.warning("Empty telegram received")
                     else:
                         values = parse_telegram(lines)
+                        if not logged_first:
+                            log.info("First telegram: %s", lines)
+                            logged_first = True
 
                         for obis, (topic, uid, name) in DIAG_MAP.items():
-                            if obis in values:
-                                client.publish(topic, values[obis][0], retain=True)
+                            for code in (obis,) + DIAG_ALIASES.get(obis, ()):
+                                if code in values:
+                                    client.publish(topic, values[code][0], retain=True)
+                                    break
 
                         for obis, (topic, uid, name, dc, u, sc) in OBIS_MAP.items():
                             if obis in values:
