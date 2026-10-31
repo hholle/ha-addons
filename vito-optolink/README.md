@@ -1,8 +1,8 @@
 # Home Assistant Add-on: Vito Optolink
 
-Talks P300 directly to a Viessmann Vitotronic over a USB Optolink adapter and publishes to Home Assistant via MQTT. Replaces the `vcontrold` add-on (see `PLAN.md`).
+Talks P300 directly to a Viessmann Vitotronic over a USB Optolink adapter and publishes to Home Assistant via MQTT. Successor of the former `vcontrold` add-on (removed from this repository, see `PLAN.md`).
 
-Entities use the same `unique_id`s and the same device ("Viessmann Heizung") as the vcontrold add-on, so dashboards keep working. Stop the `vcontrold` add-on before starting this one: only one process can use the serial port.
+Entities use the same `unique_id`s and the same device ("Viessmann Heizung") as the vcontrold add-on, so dashboards keep working. If the old `vcontrold` add-on is still installed in HA, stop and uninstall it: only one process can use the serial port.
 
 ## Options
 
@@ -53,10 +53,6 @@ Finds out which addresses mean what (e.g. burner modulation, flue gas temperatur
 Defined in `datapoints/20CB.yaml` (address, length, type, scaling, group, Home Assistant class). Entries with `verified: false` are logged at startup: check them against the controller display.
 
 MQTT: states under `vito_optolink/<id>`, availability under `vito_optolink/status`.
-
-## Rollback
-
-Stop this add-on and start `vcontrold` again. It republishes its own discovery and state topics.
 
 ## Tests
 

@@ -8,11 +8,11 @@ Install by adding this repository in HA:
 
 ## Add-ons
 
-### [vcontrold](./vcontrold)
+### [vito-optolink](./vito-optolink)
 
-Connects a Viessmann Vito heating system to Home Assistant via MQTT using the
-[vcontrold](https://github.com/openv/vcontrold) daemon and a USB optolink adapter.
-Publishes heating temperatures, pump states, burner stats, and operating modes.
+Connects a Viessmann Vitotronic heating controller to Home Assistant via MQTT. Talks the
+P300 protocol directly over a USB Optolink adapter and publishes temperatures, pump states,
+burner statistics and operating modes with auto-discovery.
 
 Hardware: USB optolink adapter → `/dev/ttyUSBVito`
 
