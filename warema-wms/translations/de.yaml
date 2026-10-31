@@ -1,0 +1,34 @@
+configuration:
+  wms_serial_port:
+    name: Serielles Gerät
+    description: Der WMS-USB-Stick.
+  wms_key:
+    name: Netzwerkschlüssel
+    description: WMS-Netzwerkschlüssel, 32 Hex-Zeichen.
+  wms_pan_id:
+    name: PAN-ID
+    description: WMS-PAN-ID. FFFF startet die Netzwerk-Erkennung (loggt Kanal, PAN-ID und Schlüssel).
+  wms_channel:
+    name: Kanal
+    description: WMS-Funkkanal.
+  ignored_devices:
+    name: Ignorierte Geräte
+    description: Kommagetrennte Seriennummern, die ausgelassen werden.
+  force_devices:
+    name: Feste Geräte
+    description: "Funk-Scan überspringen und SNR:TYP-Paare registrieren, z. B. 1132530:2A,1152669:25 (TYP hexadezimal)."
+  device_groups:
+    name: Gerätegruppen
+    description: "Mehrere Seriennummern als ein HA-Gerät zeigen, z. B. Terrassendach:1132530,1152669;Garten:1195016."
+  polling_interval:
+    name: Abfrageintervall (ms)
+    description: Wie oft die Position jedes Geräts abgefragt wird.
+  moving_interval:
+    name: Intervall bei Fahrt (ms)
+    description: Wie oft ein fahrendes Gerät abgefragt wird.
+  rescan_interval:
+    name: Rescan-Intervall (min)
+    description: Alle N Minuten nach neuen Geräten suchen. 0 = nur beim Start und über die Schaltfläche "Scan for devices".
+  log_level:
+    name: Log-Level
+    description: debug loggt jedes gesendete und empfangene Frame.

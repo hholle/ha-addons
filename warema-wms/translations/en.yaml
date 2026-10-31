@@ -1,0 +1,34 @@
+configuration:
+  wms_serial_port:
+    name: Serial device
+    description: The WMS USB stick.
+  wms_key:
+    name: Network key
+    description: WMS network key, 32 hex characters.
+  wms_pan_id:
+    name: PAN ID
+    description: WMS PAN ID. FFFF starts network discovery mode (logs channel, PAN ID and key).
+  wms_channel:
+    name: Channel
+    description: WMS radio channel.
+  ignored_devices:
+    name: Ignored devices
+    description: Comma-separated serial numbers to leave out.
+  force_devices:
+    name: Forced devices
+    description: "Skip the radio scan and register SNR:TYPE pairs, e.g. 1132530:2A,1152669:25 (TYPE in hex)."
+  device_groups:
+    name: Device groups
+    description: "Show several serial numbers as one HA device, e.g. Terrassendach:1132530,1152669;Garten:1195016."
+  polling_interval:
+    name: Polling interval (ms)
+    description: How often each device's position is polled.
+  moving_interval:
+    name: Moving interval (ms)
+    description: How often a moving device is polled.
+  rescan_interval:
+    name: Rescan interval (min)
+    description: Scan for new devices every N minutes. 0 = only on startup and via the "Scan for devices" button.
+  log_level:
+    name: Log level
+    description: debug logs every frame sent and received.

@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.0.0
+
+- Rewritten in Python (pyserial + paho-mqtt) on the standard Home Assistant Python base image; Node.js, the source build of `serialport` and the s6 service files are gone. Same options, same MQTT topics and entities.
+- Modern layout: no `build.yaml`, `DOCS.md`, option translations (en, de), unit tests, `password` type for `wms_key`.
+- `log_level` is now `error`, `warning`, `info` or `debug`.
+- Fix: a device was marked offline whenever its position stayed unchanged; any answer now counts as alive.
+- Fix: discovery was not re-published after a Home Assistant restart.
+- Fix: entities are only available when both the bridge and the device are online (`availability_mode: all`).
+- Weather sensors now have `state_class: measurement`.
+- New: "Scan for devices" button (and MQTT topic `warema/bridge/scan`) plus option `rescan_interval` find newly paired devices without a restart.
+- Removed: unfinished "Smart socket" (type 24) and the interactive `test-cli.js`; `wms_pan_id: FFFF` still provides network discovery.
+- The bridge publishes `online` on every MQTT connect instead of on every WMS event.
+
 ## 1.1.1
 
 - Fix position inversion: setting 25% no longer jumps to 75%. Bridge now handles the WMS↔HA position mapping explicitly (WMS 0=open, HA 100=open) instead of relying on `position_open`/`position_closed` discovery fields.

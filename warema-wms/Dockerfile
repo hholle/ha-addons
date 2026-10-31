@@ -1,26 +1,15 @@
-ARG BUILD_FROM
-FROM node:24-alpine AS builder
-
-RUN apk add --no-cache python3 make g++ linux-headers
-
-WORKDIR /app
-
-COPY package-lock.json .
-COPY package.json .
-
-# Rebuild from source to avoid prebuilt binary issues on Alpine/musl
-# https://github.com/serialport/node-serialport/issues/2438
-RUN npm ci --omit=dev && npm rebuild --build-from-source
-
-# hadolint ignore=DL3006
+# https://developers.home-assistant.io/docs/apps/configuration/
+# Base image default lives here: build.yaml is deprecated.
+ARG BUILD_FROM=ghcr.io/home-assistant/base-python:latest
 FROM $BUILD_FROM
 
-RUN apk add --no-cache nodejs
+ENV LANG C.UTF-8
 
-WORKDIR /srv
+RUN pip3 install --no-cache-dir pyserial "paho-mqtt>=2.0"
 
-COPY --from=builder /app/node_modules /srv/node_modules
+COPY run.sh /
+COPY app /app
 
-COPY ./ /
+RUN chmod a+x /run.sh
 
-RUN chmod +x /etc/services.d/warema-wms/run /etc/services.d/warema-wms/finish
+CMD [ "/run.sh" ]
